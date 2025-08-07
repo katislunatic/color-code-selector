@@ -11,7 +11,10 @@
       text-align: center;
       padding: 40px;
     }
-    h1 { font-size: 2em; margin-bottom: 20px; }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
     #gorilla-img {
       width: 200px;
       height: auto;
@@ -21,54 +24,110 @@
       margin: 15px 0;
       font-size: 1.2em;
     }
-    input[type="number"] {
-      width: 60px;
-      padding: 5px;
-      margin-left: 10px;
+    input[type="range"] {
+      width: 300px;
+    }
+    .value-box {
+      display: inline-block;
+      min-width: 70px;
       font-size: 1em;
+      margin-left: 10px;
     }
     #output {
       margin-top: 25px;
       font-size: 1.5em;
       font-weight: bold;
+      background-color: #222;
+      padding: 10px;
+      border-radius: 8px;
+      display: inline-block;
+    }
+    #color-preview {
+      width: 100px;
+      height: 100px;
+      margin: 20px auto;
+      border: 2px solid #fff;
     }
   </style>
 </head>
 <body>
 
-  <h1>RGB Color Converter</h1>
+  <h1>RGB Color Selector (0–9)</h1>
   <img id="gorilla-img" src="gorilla.png" alt="Gorilla">
 
   <div class="slider-group">
-    <label>R: <input type="number" id="r" min="0" max="255" value="0"></label>
-  </div>
-  <div class="slider-group">
-    <label>G: <input type="number" id="g" min="0" max="255" value="0"></label>
-  </div>
-  <div class="slider-group">
-    <label>B: <input type="number" id="b" min="0" max="255" value="0"></label>
+    <label>R: 
+      <input type="range" id="r" min="0" max="9" value="0">
+      <span class="value-box" id="rVal9">0</span> |
+      <span class="value-box" id="rVal255">0</span>
+    </label>
   </div>
 
+  <div class="slider-group">
+    <label>G: 
+      <input type="range" id="g" min="0" max="9" value="0">
+      <span class="value-box" id="gVal9">0</span> |
+      <span class="value-box" id="gVal255">0</span>
+    </label>
+  </div>
+
+  <div class="slider-group">
+    <label>B: 
+      <input type="range" id="b" min="0" max="9" value="0">
+      <span class="value-box" id="bVal9">0</span> |
+      <span class="value-box" id="bVal255">0</span>
+    </label>
+  </div>
+
+  <div id="color-preview"></div>
   <div id="output">RGB(0, 0, 0)</div>
 
   <script>
     const rInput = document.getElementById('r');
     const gInput = document.getElementById('g');
     const bInput = document.getElementById('b');
+
+    const rVal9 = document.getElementById('rVal9');
+    const gVal9 = document.getElementById('gVal9');
+    const bVal9 = document.getElementById('bVal9');
+
+    const rVal255 = document.getElementById('rVal255');
+    const gVal255 = document.getElementById('gVal255');
+    const bVal255 = document.getElementById('bVal255');
+
     const output = document.getElementById('output');
+    const preview = document.getElementById('color-preview');
 
     function updateRGB() {
-      const r = Math.min(255, Math.max(0, rInput.value || 0));
-      const g = Math.min(255, Math.max(0, gInput.value || 0));
-      const b = Math.min(255, Math.max(0, bInput.value || 0));
-      output.textContent = `RGB(${r}, ${g}, ${b})`;
-      document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-      output.style.color = (r*0.299 + g*0.587 + b*0.114) > 186 ? '#000' : '#fff';
+      const r = parseInt(rInput.value);
+      const g = parseInt(gInput.value);
+      const b = parseInt(bInput.value);
+
+      // Scale 0–9 to 0–255 range
+      const r255 = Math.round((r / 9) * 255);
+      const g255 = Math.round((g / 9) * 255);
+      const b255 = Math.round((b / 9) * 255);
+
+      // Show 0–9 values
+      rVal9.textContent = r;
+      gVal9.textContent = g;
+      bVal9.textContent = b;
+
+      // Show 0–255 values
+      rVal255.textContent = r255;
+      gVal255.textContent = g255;
+      bVal255.textContent = b255;
+
+      // Update RGB text and preview
+      output.textContent = `RGB(${r255}, ${g255}, ${b255})`;
+      preview.style.backgroundColor = `rgb(${r255}, ${g255}, ${b255})`;
     }
 
     [rInput, gInput, bInput].forEach(input =>
       input.addEventListener('input', updateRGB)
     );
+
+    updateRGB();
   </script>
 </body>
 </html>
