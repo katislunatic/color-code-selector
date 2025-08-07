@@ -19,6 +19,7 @@
       width: 200px;
       height: auto;
       margin-bottom: 20px;
+      filter: saturate(0%);
     }
     .slider-group {
       margin: 15px 0;
@@ -29,7 +30,7 @@
     }
     .value-box {
       display: inline-block;
-      min-width: 70px;
+      min-width: 50px;
       font-size: 1em;
       margin-left: 10px;
     }
@@ -53,7 +54,7 @@
 <body>
 
   <h1>RGB Color Selector (0–9)</h1>
-  <img id="gorilla-img" src="gorilla.png" alt="Gorilla">
+  <img id="gorilla-img" src="https://gorillatag.co.uk/images/electronicbase.png" alt="Gorilla logo">
 
   <div class="slider-group">
     <label>R: 
@@ -97,30 +98,36 @@
 
     const output = document.getElementById('output');
     const preview = document.getElementById('color-preview');
+    const gorilla = document.getElementById('gorilla-img');
 
     function updateRGB() {
       const r = parseInt(rInput.value);
       const g = parseInt(gInput.value);
       const b = parseInt(bInput.value);
 
-      // Scale 0–9 to 0–255 range
+      // Scale 0–9 to 0–255
       const r255 = Math.round((r / 9) * 255);
       const g255 = Math.round((g / 9) * 255);
       const b255 = Math.round((b / 9) * 255);
 
-      // Show 0–9 values
+      // Update 0–9 values
       rVal9.textContent = r;
       gVal9.textContent = g;
       bVal9.textContent = b;
 
-      // Show 0–255 values
+      // Update 0–255 values
       rVal255.textContent = r255;
       gVal255.textContent = g255;
       bVal255.textContent = b255;
 
-      // Update RGB text and preview
-      output.textContent = `RGB(${r255}, ${g255}, ${b255})`;
+      // Update preview box
       preview.style.backgroundColor = `rgb(${r255}, ${g255}, ${b255})`;
+
+      // Update RGB text
+      output.textContent = `RGB(${r255}, ${g255}, ${b255})`;
+
+      // Tint gorilla image
+      gorilla.style.filter = `saturate(0%) drop-shadow(0 0 0 rgb(${r255}, ${g255}, ${b255}))`;
     }
 
     [rInput, gInput, bInput].forEach(input =>
