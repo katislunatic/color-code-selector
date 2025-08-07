@@ -44,7 +44,7 @@
     #color-preview {
       width: 200px;
       height: 200px;
-      margin: 30px auto 0;
+      margin: 30px auto 20px;
       border: 4px solid #fff;
       border-radius: 12px;
       transition: background-color 0.3s ease;
@@ -65,7 +65,9 @@
 </head>
 <body>
 
-  <h1>RGB Color Selector (0–9)</h1>
+  <h1>RGB Color Selector</h1>
+
+  <div id="color-preview"></div>
 
   <div class="slider-group">
     <label>R: 
@@ -91,7 +93,6 @@
     </label>
   </div>
 
-  <div id="color-preview"></div>
   <div id="output">RGB(0, 0, 0)</div>
 
   <img
