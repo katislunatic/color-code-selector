@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Color Code Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .color-box {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+            border: 2px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Color Code Selector</h1>
+    <div class="color-box" id="colorBox"></div>
+    <button onclick="setColor('#FF0000')">Red</button>
+    <button onclick="setColor('#00FF00')">Green</button>
+    <button onclick="setColor('#0000FF')">Blue</button>
+
+    <p id="colorCode">Click a color</p>
+
+    <script>
+        function setColor(color) {
+            document.getElementById("colorBox").style.backgroundColor = color;
+            document.getElementById("colorCode").innerText = color;
+        }
+    </script>
+</body>
+</html>
